@@ -7,10 +7,8 @@ public class Board {
 	private int column;
 	
 	public Board(int row, int cols, String state){
-//		System.out.println(row + " - " + cols);
 		this.row = row;
 		column = cols;
-//		setColumn(cols);
 		this.state = state;
 	}
 
