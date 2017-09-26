@@ -31,21 +31,22 @@ public class GamePanel extends JPanel {
 	private static final int DEFAULT_HEIGHT = 200;
 	private static final int BOARD_SIZE = 3;
 	private static final int BOARD_DISTANCE  = 3;
-	
-	JLabel player1score;
-	JLabel player2score;
-	
-	JButton[] gameButtons = new JButton[10];
-	
 	static String[][] results = new String[BOARD_SIZE][BOARD_SIZE];
-	static final Logger logger = LogManager.getLogger(GamePanel.class.getName());
-	GridBagConstraints gbc;
-	Board board;
 	
 	int counter = 0; 
 	int xWins = 0;
 	int yWins = 0;
+	
+	JButton[] gameButtons = new JButton[10];
 
+	static final Logger logger = LogManager.getLogger(GamePanel.class.getName());
+	
+	JLabel player1score;
+	JLabel player2score;
+	
+	GridBagConstraints gbc;
+	Board board;
+	
 	/**
 	 * Game Panel prepare layout of TicTacToe game
 	 */
@@ -59,7 +60,6 @@ public class GamePanel extends JPanel {
 			gameButtons[i].setActionCommand(Integer.toString(i));
 			gameButtons[i].setPreferredSize(new Dimension(40,40));
 			gameButtons[i].addActionListener((ActionEvent e) -> {
-
 				JButton button = (JButton) e.getSource();
 
 				if(counter % 2 == 0){
@@ -88,7 +88,7 @@ public class GamePanel extends JPanel {
 	}
 	
 	/**
-	 * Method which helps to fix position of JLabel or JButton
+	 * Method which helps to fix position of JLabel and JButton
 	 * @return gbc - configuration of exact element position
 	 */
 	public GridBagConstraints setElementPosition(int gridx, int gridy, int gridWidth, int ipadx, int ipady) {
@@ -114,7 +114,6 @@ public class GamePanel extends JPanel {
 		String state = button.getText();
 		results[row][col] = state;
 		if(checkIfWin(row, col, state)){
-//			System.out.println("Congratulations!! Player X is the Winner!! _o_ ");
 			int xWins = Integer.valueOf(player1score.getText()) + 1;
 			player1score.setText(Integer.toString(xWins));
 			counter = 9;
@@ -135,10 +134,10 @@ public class GamePanel extends JPanel {
 	/**
 	 * Check if current player won the game
 	 * game board has 9 fields with numbers from 1 to 9. 
-	 * @param row - allows t
-	 * @param col
-	 * @param state
-	 * @return
+	 * @param row - represent a row in game board. Range between 0 and 2
+	 * @param col - represent a col in game board. Range between 0 and 2
+	 * @param state - represent symbol of current player
+	 * @return true in case if checked player won, otherwise return false
 	 */
 	public boolean checkIfWin(int row, int col, String state){
 		
@@ -150,7 +149,6 @@ public class GamePanel extends JPanel {
 			if( i == (BOARD_SIZE - 1)) {
 				for(int j = 0; j<BOARD_SIZE; j++){
 					gameButtons[row*3+1+j].setBackground(Color.GREEN);
-					System.out.println("HURA");
 				}
 				return true;
 			}
@@ -197,7 +195,6 @@ public class GamePanel extends JPanel {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -231,7 +228,6 @@ public class GamePanel extends JPanel {
 	public void firstOpponentMove(int row, int col, String opponentSymbol) {
 		boolean isEmptyField = false;
 		while(!isEmptyField & counter<9){
-			System.out.println("puk puk "+ counter);
 			if(results[col][row] == null) {
 				blockingFunction(col, row, opponentSymbol);
 				isEmptyField = true;
@@ -243,7 +239,6 @@ public class GamePanel extends JPanel {
 							isEmptyField = true;	
 							i=BOARD_SIZE;
 							j=BOARD_SIZE;
-
 						}
 					}
 				}
@@ -263,26 +258,21 @@ public class GamePanel extends JPanel {
 		results[row][col] = opponentSymbol;
 		counter++;	
 		if(counter>=9){
-			System.out.println("Koniec - remis");
+			JOptionPane.showMessageDialog(this, "Dead-heat - press Game reset button to play once again.");
 		}
 		if(checkIfWin(row, col, opponentSymbol)){
-			System.out.println("Congratulations for Player " + opponentSymbol +" who is the winner!! ");
+			JOptionPane.showMessageDialog(this, "Player X won - press Game reset button to play once again.");
 			int oWins = Integer.valueOf(player2score.getText()) + 1;
 			player2score.setText(Integer.toString(oWins));
-			
-			
-//			System.out.println("counter is: " + counter);
-//			JOptionPane.showMessageDialog(this, "Congratulations!! you are the winner!! ");
 			counter = 9;
 		}
-		System.out.println("Block on: [" + row + ", " + col + "]");
-		logger.info("witaj logger log");
+		logger.info("Block on: [" + row + ", " + col + "]");
 	}
 	
 	/**
 	 * check if opponent should be blocked in row
 	 * @return board - if there is necessity of blocking the certain row then it include number of row and column where 'O' symbol should be inserted. 
-	 * @return board - it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
+	 * it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
 	 */
 	public Board checkIfBlockRow(){
 		int xCounter = 0;
@@ -302,7 +292,6 @@ public class GamePanel extends JPanel {
 					tempCol = j;
 				}					
 				if(xCounter>1 && blankCounter==1){
-//					System.out.println("time to block row on:  [" + tempRow +", " + tempCol+"]"+i+" - " +j);
 					return new Board(tempRow, tempCol, "O");
 				}
 			}
@@ -314,7 +303,7 @@ public class GamePanel extends JPanel {
 	
 	 /** check if opponent should be blocked in column
 	 * @return board - if there is necessity of blocking the certain column then it include number of row and column where 'O' symbol should be inserted. 
-	 * @return board - it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
+	 * it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
 	 */
 	public Board checkIfBlockCol(){
 		int xCounter = 0;
@@ -334,7 +323,6 @@ public class GamePanel extends JPanel {
 					tempCol = i;
 				}					
 				if(xCounter>1 && blankCounter==1){
-//					System.out.println("time to block row on:  [" + tempRow +", " + tempCol+"]"+i+" - " +j);
 					return new Board(tempRow, tempCol, "O");
 				}
 			}
@@ -347,7 +335,7 @@ public class GamePanel extends JPanel {
 	
 	 /** check if opponent should be blocked in diagonal
 	 * @return board - if there is necessity of blocking the diagonal then it include number of row and column where 'O' symbol should be inserted. 
-	 * @return board - it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
+	 * it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
 	 */
 	public Board checkIfBlockDiagonal(){
 		int xCounter = 0;
@@ -356,8 +344,7 @@ public class GamePanel extends JPanel {
 		int tempCol = 0;
 		
 		for(int i = 0 ; i < BOARD_SIZE ; i++){
-				if(results[i][i]!= null){	//  && !results[i][i].equals("O")){
-//					System.out.println("Hmmm...");
+				if(results[i][i]!= null){
 					if(results[i][i].equals("X")){
 						xCounter++;
 					}
@@ -367,7 +354,6 @@ public class GamePanel extends JPanel {
 					tempCol = i;
 				}
 				if(xCounter>1 && blankCounter==1){
-//						System.out.println("time to block diagonal on " + tempRow +", " + tempCol);
 					return new Board(tempRow, tempCol, "O");
 				}
 		}
@@ -376,7 +362,7 @@ public class GamePanel extends JPanel {
 	
 	 /** check if opponent should be blocked in anti-diagonal
 	 * @return board - if there is necessity of blocking the anti diagonal then it include number of row and column where 'O' symbol should be inserted. 
-	 * @return board - it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
+	 * it also include state symbol. if it's 'O' then it means that this point should be block otherwise 'Z' = no necessity to block. 
 	 */
 	public Board checkIfBlockAntiDiagonal(){
 		int xCounter = 0;
@@ -396,7 +382,6 @@ public class GamePanel extends JPanel {
 					tempCol = BOARD_SIZE-1-i;
 				}
 				if(xCounter>1 && blankCounter==1){
-//					System.out.println("time to block Anti-diagonal on " + tempRow +", " + tempCol);
 					return new Board(tempRow, tempCol, "O");
 				}
 		}
@@ -414,10 +399,8 @@ public class GamePanel extends JPanel {
 			for(int j = 0 ; j < BOARD_SIZE ; j++){
 				results[i][j] = null;
 			}
-		}
-		
+		}	
 		counter = 0;
-		
 	}
 	
 }
