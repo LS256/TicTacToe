@@ -1,5 +1,11 @@
 package pl.codeforfun;
 
+/**
+*	Class helps to exchage information abut position on game board.
+*	@param row - represent row on game board, range 0-2
+* 	@param col - represent column on game board, range 0-2
+* 	@param state - represent symbol of player "X" or "O"
+**/
 public class Board {
 	private int row;
 
