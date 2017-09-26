@@ -1,9 +1,6 @@
 package pl.codeforfun;
 
 import java.awt.EventQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import javax.swing.JFrame;
 
 public class TicTacToe {
