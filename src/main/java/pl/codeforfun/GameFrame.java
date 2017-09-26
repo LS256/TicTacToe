@@ -24,10 +24,8 @@ import javax.swing.JOptionPane;
 
 
 /**
- * 
- * @author dom
- *	TDD	ikona obrazek w tle na przycisku
- *	TDD	player2 = computer
+ * @author LS
+ * Main class with TicTacToe game.
  */
 public class GameFrame extends JFrame{
 		static final int DEFAULT_HEIGHT = 320;
@@ -41,37 +39,28 @@ public class GameFrame extends JFrame{
 		JButton[] buttons = new JButton[10];
 
 		public GameFrame() {
-			super("Tic Tac Toe");
-			
-			this.setSize(400, 400);		
+			super("Tic Tac Toe");	
+			this.setSize(DEFAULT_WEIGHT, DEFAULT_HEIGHT);		
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setLayout(new GridBagLayout());
 			
+			GamePanel gamePanel = new GamePanel();
 			GridBagConstraints gbc = new GridBagConstraints();
 
 			gbc.gridx = 0;
-			gbc.gridy = 0;
-//			gbc.fill(GridBagConstraints.BOTH);
-		
+			gbc.gridy = 0;			
+			this.add(gamePanel, gbc);
 			
-			GamePanel gPanel = new GamePanel();
-			this.add(gPanel, gbc);
-			
-			
-			
-			JButton dane = new JButton("GameReset");
-			dane.addActionListener(e->{
-				gPanel.newGame();
-				System.out.println(this.getWidth() +", "+this.getHeight());
+			JButton gameReset = new JButton("Game reset");
+			gameReset.addActionListener(e->{
+				gamePanel.newGame();
 			});
 			
 			gbc.gridx=0;
 			gbc.gridy=5;
-			this.add(dane,gbc);
+			this.add(gameReset, gbc);
 			
 			pack();
-			this.setSize(DEFAULT_WEIGHT, DEFAULT_HEIGHT);
-			this.setVisible(true);
-//			pack();		
+			this.setVisible(true);	
 			}
 }
