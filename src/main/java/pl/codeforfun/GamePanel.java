@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 
 /**
  * 
- * @author LS
+ * @author LS256
  * class where is created panel with all components. This panel will be added to GameFrame
  */
 
