@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
- * @author LS
+ * @author LS256
  * Main class with TicTacToe game.
  */
 public class GameFrame extends JFrame{
