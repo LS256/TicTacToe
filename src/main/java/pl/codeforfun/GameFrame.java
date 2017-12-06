@@ -10,8 +10,8 @@ import javax.swing.JFrame;
  * Main class with TicTacToe game.
  */
 public class GameFrame extends JFrame{
-		static final int DEFAULT_HEIGHT = 320;
-		static final int DEFAULT_WEIGHT = 250;
+		static final int DEFAULT_HEIGHT = 400;
+		static final int DEFAULT_WEIGHT = 300;
 		static final int BOARD_SIZE = 3;
 		static final int BOARD_DISTANCE  = 3;
 		int counter = 0;
